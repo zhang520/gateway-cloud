@@ -1,0 +1,18 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: gateway-rest
+zuul:
+  ignoredServices: '*'
+  routes:
+    account:
+      path: /api/gateway/account/**
+      serviceId: gateway-account
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka/
