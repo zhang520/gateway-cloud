@@ -10,4 +10,12 @@ public class ResponseObj {
         this.status = status;
         this.data =data;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public Object getData() {
+        return data;
+    }
 }

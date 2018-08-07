@@ -1,30 +1,31 @@
 package com.xuanwu.xtion.common.response;
 
-import javax.ws.rs.core.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public class RestHelper {
 
-    public static Response success(Object data) {
-        return Response.ok().entity(new ResponseObj(1, data)).build();
+    public static ResponseEntity<ResponseObj> success(Object data) {
+        return ResponseEntity.ok(new ResponseObj(1, data));
     }
 
-    public static Response success() {
+    public static ResponseEntity<ResponseObj> success() {
         return success(null);
     }
 
-    public static Response failure(Response.Status status, Object data) {
-        return Response.status(status).entity(new ResponseObj(0, data)).build();
+    public static ResponseEntity<ResponseObj> failure(HttpStatus status, Object data) {
+        return new ResponseEntity<ResponseObj>(new ResponseObj(0, data), status);
     }
 
-    public static Response failure(Response.Status status) {
+    public static ResponseEntity<ResponseObj> failure(HttpStatus status) {
         return failure(status, null);
     }
 
-    public static Response failure(Object data) {
-        return failure(Response.Status.INTERNAL_SERVER_ERROR, data);
+    public static ResponseEntity<ResponseObj> failure(Object data) {
+        return failure(HttpStatus.INTERNAL_SERVER_ERROR, data);
     }
 
-    public static Response failure() {
-        return failure(Response.Status.INTERNAL_SERVER_ERROR);
+    public static ResponseEntity<ResponseObj> failure() {
+        return failure(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

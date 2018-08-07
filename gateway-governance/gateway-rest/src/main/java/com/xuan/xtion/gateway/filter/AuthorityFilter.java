@@ -6,9 +6,8 @@ import com.xuanwu.xtion.common.exception.AppErrorCode;
 import com.xuanwu.xtion.common.response.RestHelper;
 import com.xuanwu.xtion.common.util.JsonUtil;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import javax.ws.rs.core.Response;
 
 @Component
 public class AuthorityFilter extends ZuulFilter {
@@ -23,8 +22,8 @@ public class AuthorityFilter extends ZuulFilter {
         RequestContext context = RequestContext.getCurrentContext();
         context.setResponseGZipped(true);
         context.setSendZuulResponse(false);
-        context.setResponseStatusCode(Response.Status.UNAUTHORIZED.getStatusCode());
-        context.setResponseBody(JsonUtil.getJson(RestHelper.failure(AppErrorCode.AUTHORITY_ERROR.getErrorMsg()).getEntity()));
+        context.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        context.setResponseBody(JsonUtil.getJson(RestHelper.failure(AppErrorCode.AUTHORITY_ERROR.getErrorMsg()).getBody()));
         return null;
     }
 

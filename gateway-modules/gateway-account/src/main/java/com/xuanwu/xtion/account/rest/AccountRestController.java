@@ -1,28 +1,28 @@
 package com.xuanwu.xtion.account.rest;
 
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import com.xuanwu.xtion.common.response.ResponseObj;
+import com.xuanwu.xtion.common.response.RestHelper;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+@RestController
+public class AccountRestController {
 
-@Component
-@Produces(MediaType.APPLICATION_JSON)
-public class AccountRestController implements InitializingBean {
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.print("xxxx");
+    @ResponseBody
+    @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseObj> getUser(@PathVariable String userId) {
+        return RestHelper.success(userId);
     }
 
-    @GET
-    @Path("/get/{userId}")
-    public Object getUser(@PathParam("userId") String userId) {
-        return userId;
+    @RequestMapping(value = "/say", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseObj> say() {
+        return RestHelper.success("hello");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseObj hello() {
+        return new ResponseObj(1, "hello");
+    }
 }
