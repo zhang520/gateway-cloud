@@ -1,12 +1,10 @@
 package com.xuanwu.xtion.common.response;
 
-public class ResponseObj {
+public class ResponseObj<T> {
     private int status;
-    private Object data;
-    public ResponseObj(int status) {
-        this.status = status;
-    }
-    public ResponseObj(int status, Object data) {
+    private T data;
+    public ResponseObj() {}
+    public ResponseObj(int status, T data) {
         this.status = status;
         this.data =data;
     }
@@ -15,7 +13,7 @@ public class ResponseObj {
         return status;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 }

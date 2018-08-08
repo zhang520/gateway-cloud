@@ -9,22 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-modules</artifactId>
+    <artifactId>gateway-system</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>gateway-account</module>
-        <module>gateway-message</module>
+        <module>gateway-zipkin</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.xuanwu.xtion</groupId>
-            <artifactId>gateway-common</artifactId>
-            <version>${gate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-        </dependency>
-    </dependencies>
+
 </project>

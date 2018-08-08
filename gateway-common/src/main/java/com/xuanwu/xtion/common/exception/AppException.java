@@ -23,4 +23,8 @@ public class AppException extends RuntimeException {
     public Throwable fillInStackTrace() {
         return this;
     }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
 }

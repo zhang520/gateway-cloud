@@ -1,4 +1,4 @@
-package com.xuanwu.xtion;
+package com.xuanwu.xtion.discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

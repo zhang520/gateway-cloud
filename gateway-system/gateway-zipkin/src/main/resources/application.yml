@@ -1,0 +1,20 @@
+server:
+  port: 9098
+spring:
+  application:
+    name: gateway-zipkin
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+zipkin:
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      hosts: http://127.0.0.1:9200
+      username: elastic
+      password:
+      cluster: elasticsearch
+      index: zipkin
+      index-shards: 1
+      index-replicas: 1
