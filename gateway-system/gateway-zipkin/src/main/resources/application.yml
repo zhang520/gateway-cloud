@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: gateway-zipkin
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 127.0.0.1:9400  #ip地址根据实际kafka集群地址
+          zkNodes: 127.0.0.1:2181
 eureka:
   client:
     registerWithEureka: false
