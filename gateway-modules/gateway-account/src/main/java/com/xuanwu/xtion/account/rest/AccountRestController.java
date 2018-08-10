@@ -1,5 +1,6 @@
 package com.xuanwu.xtion.account.rest;
 
+import com.xuanwu.xtion.account.service.KafkaService;
 import com.xuanwu.xtion.common.entity.MessageInfo;
 import com.xuanwu.xtion.common.response.ResponseObj;
 import com.xuanwu.xtion.common.response.RestHelper;
@@ -18,6 +19,9 @@ public class AccountRestController {
     @Autowired
     private MessageServiceRpc messageServiceRpc;
 
+    @Autowired
+    private KafkaService kafkaService;
+
     @ResponseBody
     @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseObj> getUser(@PathVariable String userId) {
@@ -28,6 +32,7 @@ public class AccountRestController {
     public ResponseEntity<ResponseObj> say() {
         ResponseObj<List<MessageInfo>> response = messageServiceRpc.send("hello");
         List<MessageInfo> infos = response == null ? null : response.getData();
+        kafkaService.sendMsg("hello");
         return RestHelper.success(JsonUtil.getJson(infos));
     }
 }

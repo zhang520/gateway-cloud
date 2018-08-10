@@ -8,7 +8,18 @@ spring:
       kafka:
         binder:
           brokers: 127.0.0.1:9400  #ip地址根据实际kafka集群地址
-          zkNodes: 127.0.0.1:2181
+          zk-nodes: 127.0.0.1:2181
+          auto-add-partitions: true
+          auto-create-topics: true
+          min-partition-count: 1
+      bindings:
+        input:
+          destination: event-demo
+          group: s1
+          consumer:
+            autoCommitOffset: false
+            concurrency: 1
+            partitioned: false
 eureka:
   client:
     registerWithEureka: false
