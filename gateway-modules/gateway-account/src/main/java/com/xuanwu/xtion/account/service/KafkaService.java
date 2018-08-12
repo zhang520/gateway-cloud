@@ -5,7 +5,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 
-@EnableBinding(Source.class)
+//@EnableBinding(Source.class)
 public class KafkaService {
 
     @Autowired

@@ -19,8 +19,8 @@ public class AccountRestController {
     @Autowired
     private MessageServiceRpc messageServiceRpc;
 
-    @Autowired
-    private KafkaService kafkaService;
+//    @Autowired
+//    private KafkaService kafkaService;
 
     @ResponseBody
     @RequestMapping(value = "/get/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +32,7 @@ public class AccountRestController {
     public ResponseEntity<ResponseObj> say() {
         ResponseObj<List<MessageInfo>> response = messageServiceRpc.send("hello");
         List<MessageInfo> infos = response == null ? null : response.getData();
-        kafkaService.sendMsg("hello");
+//        kafkaService.sendMsg("hello");
         return RestHelper.success(JsonUtil.getJson(infos));
     }
 }
