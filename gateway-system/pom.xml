@@ -9,11 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.xuanwu.xtion</groupId>
     <artifactId>gateway-system</artifactId>
     <packaging>pom</packaging>
+    <version>${gate.version}</version>
     <modules>
         <module>gateway-zipkin</module>
     </modules>
-
 
 </project>
