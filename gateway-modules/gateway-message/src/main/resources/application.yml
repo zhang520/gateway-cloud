@@ -26,6 +26,15 @@ spring:
 #          content-type: text/plain
 #          producer:
 #            partitionCount: 1
+  redis:
+    host: 172.16.0.132
+    port: 6379
+    pool:
+      max-alive: 5
+      max-wait: -1
+      max-idle: 5
+      min-idle: 0
+    timeout: 10000
 eureka:
   client:
     serviceUrl:

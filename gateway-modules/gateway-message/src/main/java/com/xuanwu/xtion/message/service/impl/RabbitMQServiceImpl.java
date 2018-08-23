@@ -1,5 +1,7 @@
 package com.xuanwu.xtion.message.service.impl;
 
+import com.xuanwu.xtion.common.cache.Cache;
+import com.xuanwu.xtion.common.constant.CacheConstant;
 import com.xuanwu.xtion.message.rabbitmq.RabbitRoutingAdminTemplate;
 import com.xuanwu.xtion.message.rabbitmq.RabbitRoutingTemplate;
 import com.xuanwu.xtion.message.rabbitmq.config.ExchangeConfig;
@@ -37,6 +39,9 @@ public class RabbitMQServiceImpl implements RabbitMQService, InitializingBean {
     @Autowired
     private RabbitRoutingAdminTemplate rabbitRoutingAdminTemplate;
 
+    @Autowired
+    private Cache cache;
+
     @Override
     public RabbitConfig getDefaultRabbitConfig() {
         return defaultConfig;
@@ -49,17 +54,32 @@ public class RabbitMQServiceImpl implements RabbitMQService, InitializingBean {
 
     @Override
     public RabbitConfig getRabbitConfig(int user) {
-        return null;
+        RabbitConfig rabbitConfig = (RabbitConfig) cache.get(CacheConstant.RABBIT_CONFIG_CACHE_KEY.value(), String.valueOf(user));
+        return rabbitConfig == null ? this.getDefaultRabbitConfig() : rabbitConfig;
     }
 
     @Override
     public RabbitConfig getAdminRabbitConfig(int user) {
-        return null;
+        RabbitConfig rabbitConfig = this.getRabbitConfig(user);
+        if (rabbitConfig != defaultConfig) {
+            rabbitConfig = (RabbitConfig) cache.get(CacheConstant.RABBIT_CONFIG_CACHE_KEY.value(), new StringBuilder().append(rabbitConfig.getHost()).append(rabbitConfig.getPort())
+                    .append(rabbitConfig.getVirtualHost()).toString());
+        } else {
+
+        }
+        return rabbitConfig;
+    }
+
+    @Override
+    public boolean saveRabbitConfig(int user, RabbitConfig rabbitConfig) {
+        // save db.
+        cache.put(CacheConstant.RABBIT_CONFIG_CACHE_KEY.value(), String.valueOf(user), rabbitConfig);
+        return true;
     }
 
     @Override
     public boolean declareExchange(ExchangeConfig exchangeConfig, RabbitConfig rabbitConfig) {
-        AmqpAdmin amqpAdmin = rabbitRoutingAdminTemplate.getAmqpAdmin(defaultConfig);
+        AmqpAdmin amqpAdmin = rabbitRoutingAdminTemplate.getAmqpAdmin(rabbitConfig);
         Exchange exchange = null;
         switch (exchangeConfig.getType()) {
             case ExchangeTypes.TOPIC:
@@ -79,7 +99,8 @@ public class RabbitMQServiceImpl implements RabbitMQService, InitializingBean {
 
     @Override
     public boolean declareExchange(ExchangeConfig exchangeConfig, int user) {
-        return false;
+        RabbitConfig adminConfig = this.getAdminRabbitConfig(user);
+        return declareExchange(exchangeConfig, adminConfig);
     }
 
     @Override
